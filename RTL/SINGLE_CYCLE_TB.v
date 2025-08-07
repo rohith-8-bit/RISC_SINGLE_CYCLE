@@ -20,10 +20,10 @@ module Single_Cycle_Top_Tb ();
     initial
     begin
         rst <= 1'b0;
-        #100;
+        #200;
 
         rst <=1'b1;
-        #1050;
+        #2050;
         $finish;
     end
 endmodule
