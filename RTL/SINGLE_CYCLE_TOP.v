@@ -10,7 +10,13 @@
 `include"MUX_2.v"
 
 
-module SINGLE_CYCLE_TOP(input clk, rst);
+module SINGLE_CYCLE_TOP(
+        input clk,
+        input rst,
+        output [31:0] PC_OUT,
+        output [31:0] INSTR_OUT
+    );
+    
 
 wire [31:0]PC_TOP, PC_ONE, PC_TARGET, RD_INSTR, RD1_TOP, RD2_TOP, SIGN_EXT_TOP, ALUResult, ReadData, PC_PLUS, SrcB, MUX_Result;
 wire RegWrite, MemWrite, ALUSrc, PCSrc, Zero, Jump;
@@ -74,7 +80,8 @@ wire [2:0] ALUControl_TOP;
             .Negative(),
             .Zero(Zero),
             .Carry(),
-            .Overflow());
+            .Overflow(),
+            .rst(rst));
             
     CONTROL_UNIT_TOP CONTROL(
             .Opcode(RD_INSTR[6:0]),
@@ -104,6 +111,8 @@ wire [2:0] ALUControl_TOP;
             .c(PC_PLUS),
 	    .s(ResultSrc),
 	    .y(MUX_Result));
+
+assign PC_OUT = PC_TOP;
+assign INSTR_OUT = RD_INSTR;
             
-    
 endmodule
